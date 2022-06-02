@@ -45,5 +45,5 @@ logging:
   level:
     com:
       chendb:
-        shareding:
+        sharding:
           mapper: debug
