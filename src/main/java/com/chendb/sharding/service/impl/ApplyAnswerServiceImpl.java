@@ -58,6 +58,8 @@ public class ApplyAnswerServiceImpl extends ServiceImpl<ApplyAnswerMapper, Apply
 
     @Override
     public boolean saveOrUpdate(ApplyAnswerDTO applyAnswerDTO) {
-        return this.saveOrUpdate(applyAnswerDTO);
+        ApplyAnswer applyAnswer = new ApplyAnswer();
+        BeanUtils.copyProperties(applyAnswerDTO, applyAnswer);
+        return this.saveOrUpdate(applyAnswer);
     }
 }

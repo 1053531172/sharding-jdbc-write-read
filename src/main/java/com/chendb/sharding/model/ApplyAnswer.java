@@ -1,5 +1,6 @@
 package com.chendb.sharding.model;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -23,7 +24,7 @@ public class ApplyAnswer extends Model<ApplyAnswer> implements Serializable {
     private static final long serialVersionUID = 1214090510324990108L;
 
     /** id,唯一键 */
-    @TableId
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Long id;
 
     /** 测试题目id */
