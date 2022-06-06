@@ -1,5 +1,6 @@
 package com.chendb.sharding.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.chendb.sharding.dto.ApplyAnswerDTO;
 import com.chendb.sharding.service.ApplyAnswerService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,5 +35,15 @@ public class ApplyAnswerController {
     @PostMapping("/sharding/apply/answer/saveOrUpdate")
     public boolean saveOrUpdate(ApplyAnswerDTO applyAnswerDTO) {
         return applyAnswerService.saveOrUpdate(applyAnswerDTO);
+    }
+
+    @GetMapping("/sharding/apply/answer/selectOneById")
+    public ApplyAnswerDTO selectOneById(Long id) {
+        return applyAnswerService.selectOneById(id);
+    }
+
+    @GetMapping("/sharding/apply/answer/page")
+    public Page<ApplyAnswerDTO> page(int pageIndex, int pageSize, Long classId) {
+        return applyAnswerService.page(pageIndex, pageSize, classId);
     }
 }

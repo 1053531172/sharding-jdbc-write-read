@@ -2,43 +2,45 @@ spring:
   main:
     # 允许覆盖相同名称的bean
     allow-bean-definition-overriding: true
+  profiles:
+    active: dev
 
-sharding:
-  jdbc:
-    datasource:
-      names: master,slave1,slave2
-      master:
-        type: com.zaxxer.hikari.HikariDataSource
-        driver-class-name: com.mysql.cj.jdbc.Driver
-        jdbc-url: jdbc:mysql://192.168.85.62:3306/school?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
-        username: root
-        password: 123456
-      slave1:
-        type: com.zaxxer.hikari.HikariDataSource
-        driver-class-name: com.mysql.cj.jdbc.Driver
-        jdbc-url: jdbc:mysql://192.168.85.60:3306/school?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
-        username: root
-        password: 123456
-      slave2:
-        type: com.zaxxer.hikari.HikariDataSource
-        driver-class-name: com.mysql.cj.jdbc.Driver
-        jdbc-url: jdbc:mysql://192.168.85.63:3306/school?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
-        username: root
-        password: 123456
-    config:
-      masterslave:
-        # 从库查询规则(轮询)
-        load-balance-algorithm-type: round_robin
-        # 主库节点
-        master-data-source-name: master
-        # 从库节点（多个逗号隔开）
-        slave-data-source-names: slave1,slave2
-        # 主从名称
-        name: dataSource
-      props:
-        sql:
-          # 打印sql日志
-          show: true
+#sharding:
+#  jdbc:
+#    datasource:
+#      names: master,slave1,slave2
+#      master:
+#        type: com.zaxxer.hikari.HikariDataSource
+#        driver-class-name: com.mysql.cj.jdbc.Driver
+#        jdbc-url: jdbc:mysql://192.168.85.62:3306/school?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+#        username: root
+#        password: 123456
+#      slave1:
+#        type: com.zaxxer.hikari.HikariDataSource
+#        driver-class-name: com.mysql.cj.jdbc.Driver
+#        jdbc-url: jdbc:mysql://192.168.85.60:3306/school?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+#        username: root
+#        password: 123456
+#      slave2:
+#        type: com.zaxxer.hikari.HikariDataSource
+#        driver-class-name: com.mysql.cj.jdbc.Driver
+#        jdbc-url: jdbc:mysql://192.168.85.63:3306/school?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+#        username: root
+#        password: 123456
+#    config:
+#      masterslave:
+#        # 从库查询规则(轮询)
+#        load-balance-algorithm-type: round_robin
+#        # 主库节点
+#        master-data-source-name: master
+#        # 从库节点（多个逗号隔开）
+#        slave-data-source-names: slave1,slave2
+#        # 主从名称
+#        name: dataSource
+#      props:
+#        sql:
+#          # 打印sql日志
+#          show: true
 
 # 配置打印sql
 logging:

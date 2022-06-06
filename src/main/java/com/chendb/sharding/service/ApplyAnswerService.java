@@ -1,5 +1,6 @@
 package com.chendb.sharding.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.chendb.sharding.dto.ApplyAnswerDTO;
 
 import java.util.List;
@@ -32,4 +33,20 @@ public interface ApplyAnswerService {
      * @return
      */
     boolean saveOrUpdate(ApplyAnswerDTO applyAnswerDTO);
+
+    /**
+     * 查询单个数据
+     * @param id
+     * @return
+     */
+    ApplyAnswerDTO selectOneById(Long id);
+
+    /**
+     * 分页查询
+     * @param pageIndex
+     * @param pageSize
+     * @param classId
+     * @return
+     */
+    Page<ApplyAnswerDTO> page(int pageIndex, int pageSize, Long classId);
 }

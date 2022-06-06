@@ -17,9 +17,8 @@ import java.util.Date;
  * @Date 2022/6/1 14:12
  * @Version 1.0
  **/
-@TableName(value = "wkt_applyanswer")
 @Data
-public class ApplyAnswer extends Model<ApplyAnswer> implements Serializable {
+public class WktApplyAnswer extends Model<WktApplyAnswer> implements Serializable {
     /** 版本号 */
     private static final long serialVersionUID = 1214090510324990108L;
 

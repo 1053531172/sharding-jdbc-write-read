@@ -1,8 +1,7 @@
 package com.chendb.sharding.aspect;
 
 import com.chendb.sharding.annotation.MasterSelect;
-import io.shardingsphere.api.HintManager;
-import io.shardingsphere.core.hint.HintManagerHolder;
+import org.apache.shardingsphere.api.hint.HintManager;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -38,7 +37,7 @@ public class MasterSelectAspect {
         } catch (Throwable e) {
             throwable = e;
         } finally {
-            HintManagerHolder.clear();
+            HintManager.clear();
             if (throwable != null) {
                 throw  throwable;
             }

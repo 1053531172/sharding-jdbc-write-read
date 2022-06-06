@@ -1,0 +1,68 @@
+spring:
+  main:
+    # 允许覆盖相同名称的bean
+    allow-bean-definition-overriding: true
+  shardingsphere:
+    datasource:
+      names: master,slave1,slave2
+      master:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        jdbc-url: jdbc:mysql://192.168.85.62:3306/school?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+        username: root
+        password: 123456
+      db0:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        jdbc-url: jdbc:mysql://192.168.85.62:3306/school?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+        username: root
+        password: 123456
+      slave1:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        jdbc-url: jdbc:mysql://192.168.85.60:3306/school?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+        username: root
+        password: 123456
+      slave2:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        jdbc-url: jdbc:mysql://192.168.85.63:3306/school?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+        username: root
+        password: 123456
+    sharding:
+      # 配置广播表
+      broadcast-tables: wkt_dictionary
+      tables:
+        wkt_apply_answer:
+          # 单数据元不同表(datasource1与master-slave-rules的名称一致)
+          actual-data-nodes: datasource1.wkt_apply_answer_${2021..2023}
+          # 分表策略
+          table-strategy:
+            standard:
+              # 分片字段
+              sharding-column: apply_time
+              algorithm-expression: wkt_apply_answer_${Calendar.getInstance().get(Calendar.YEAR)}
+              # 精确分片算法类名称，用于=和IN该类需实现PreciseShardingAlgorithm接口并提供无参数的构造器
+              precise-algorithm-class-name: com.chendb.sharding.algorithm.DatePreciseAlgorithm
+              # 范围分片算法类名称，用于BETWEEN，可选。该类需实现RangeShardingAlgorithm接口并提供无参数的构造器
+              range-algorithm-class-name: com.chendb.sharding.algorithm.DateRangeShardingAlgorithm
+      master-slave-rules:
+        datasource1:
+          # 主库节点
+          master-data-source-name: master
+          # 从库节点
+          slave-data-source-names: slave1,slave2
+          # 负载均衡规则
+          load-balance-algorithm-type: round_robin
+    props:
+      sql:
+        # 打印sql日志
+        show: true
+
+# mybatis配置打印sql
+logging:
+  level:
+    com:
+      chendb:
+        sharding:
+          mapper: debug
