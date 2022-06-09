@@ -32,6 +32,8 @@ spring:
     sharding:
       # 配置广播表
       broadcast-tables: wkt_dictionary
+      # 配置绑定表
+      binding-tables[0]: lxx_user,wkt_course_class_user
       tables:
         wkt_apply_answer:
           # 单数据元不同表(datasource1与master-slave-rules的名称一致)
@@ -46,6 +48,18 @@ spring:
               precise-algorithm-class-name: com.chendb.sharding.algorithm.DatePreciseAlgorithm
               # 范围分片算法类名称，用于BETWEEN，可选。该类需实现RangeShardingAlgorithm接口并提供无参数的构造器
               range-algorithm-class-name: com.chendb.sharding.algorithm.DateRangeShardingAlgorithm
+        lxx_user:
+          actual-data-nodes: datasource1.lxx_user_${1..2}
+          table-strategy:
+            inline:
+              sharding-column: user_id
+              algorithm-expression: lxx_user_${user_id % 2 + 1}
+        wkt_course_class_user:
+          actual-data-nodes: datasource1.wkt_course_class_user_${1..2}
+          table-strategy:
+            inline:
+              sharding-column: user_id
+              algorithm-expression: wkt_course_class_user_${user_id % 2 + 1}
       master-slave-rules:
         datasource1:
           # 主库节点
